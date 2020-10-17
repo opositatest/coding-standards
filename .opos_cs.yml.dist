@@ -1,0 +1,15 @@
+parameters:
+    enabled:
+        - phpmd
+        - phpcsfixer
+
+    phpmd_path: src
+    phpmd_rules:
+        - controversial
+        - unusedcode
+        - codesize
+        - naming
+
+    phpcsfixer_path: src
+    phpcsfixer_test_path: tests
+    phpcsfixer_file_location: vendor/opositatest/coding-standards/src/CodingStandards/

@@ -1,0 +1,29 @@
+{
+    "name": "opositatest/coding-standards",
+    "type": "library",
+    "description": "The coding standards in the OpositaTest way",
+    "license": "MIT",
+    "authors": [],
+    "require": {
+        "php": "^7.3",
+        "derrabus/composer-parameter-handler": "^2.1",
+        "opositatest/php-cs-fixer-config": "dev-master",
+        "neronmoon/scriptsdev": "0.1.7",
+        "phpmd/phpmd": "^2.9",
+        "symfony/filesystem": "^4.4",
+        "symfony/yaml": "^4.4"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Opositatest\\CodingStandards\\": "src/CodingStandards"
+        }
+    },
+    "scripts": {
+        "cs": [
+            "php-cs-fixer fix --config=.php_cs -v"
+        ]
+    }
+}
