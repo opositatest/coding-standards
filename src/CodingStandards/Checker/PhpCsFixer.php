@@ -48,7 +48,7 @@ final class PhpCsFixer implements Checker
 
     private static function configFile($fileName, array $parameters): void
     {
-        $file = file_get_contents(__DIR__ . '/CodingStandards/' . $fileName . '.dist');
+        $file = file_get_contents(__DIR__ . '/../' . $fileName . '.dist');
 
         $file = str_replace(
             '$$CHANGE-FOR-PHPCSFIXER-PATH$$',
