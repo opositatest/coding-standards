@@ -6,9 +6,9 @@
     "authors": [],
     "require": {
         "php": "^7.3",
-        "derrabus/composer-parameter-handler": "^2.1",
-        "opositatest/php-cs-fixer-config": "dev-master",
+        "incenteev/composer-parameter-handler": "^2.1",
         "neronmoon/scriptsdev": "0.1.7",
+        "opositatest/php-cs-fixer-config": "dev-master",
         "phpmd/phpmd": "^2.9",
         "symfony/filesystem": "^4.4",
         "symfony/yaml": "^4.4"
