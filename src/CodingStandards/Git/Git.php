@@ -31,7 +31,7 @@ final class Git
             if (false === file_exists($file)) {
                 continue;
             }
-            $process = new Process(sprintf('git add %s', $file), $rootDirectory);
+            $process = new Process([sprintf('git add %s', $file)], $rootDirectory);
             $process->run();
         }
 

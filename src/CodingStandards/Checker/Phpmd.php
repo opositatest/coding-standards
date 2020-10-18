@@ -20,7 +20,7 @@ final class Phpmd implements Checker
             }
 
             $process = new Process(
-                'vendor/phpmd/phpmd/src/bin/phpmd ' . $file . ' text ' . implode(',', $parameters['phpmd_rules'])
+                ['vendor/phpmd/phpmd/src/bin/phpmd ' . $file . ' text ' . implode(',', $parameters['phpmd_rules'])]
             );
             $process->setWorkingDirectory($parameters['root_directory']);
             $process->run();

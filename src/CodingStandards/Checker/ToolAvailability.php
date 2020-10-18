@@ -11,7 +11,7 @@ trait ToolAvailability
 {
     protected static function isAvailable($tool): void
     {
-        $process = new Process(sprintf('%s -v', $tool));
+        $process = new Process([sprintf('%s -v', $tool)]);
         $process->run();
 
         if (!$process->isSuccessful()) {
