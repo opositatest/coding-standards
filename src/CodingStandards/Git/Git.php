@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Opositatest\CodingStandards\Git;
 
-use Symfony\Component\Process\Process;
-
 final class Git
 {
     public static function committedFiles(): array
@@ -31,8 +29,8 @@ final class Git
             if (false === file_exists($file)) {
                 continue;
             }
-            $process = new Process([sprintf('git add %s', $file)], $rootDirectory);
-            $process->run();
+
+            exec(sprintf('git add %s', $file));
         }
 
         return $files;

@@ -35,8 +35,10 @@ final class Application extends BaseApplication
         $output->writeln('<info>Fetching files...</info>');
         $files = Git::committedFiles();
 
-        $output->writeln('<info>Check composer</info>');
-        Composer::check($files);
+        if (in_array('composer', $this->parameters['enabled'], true)) {
+            $output->writeln('<info>Check composer</info>');
+            Composer::check($files);
+        }
 
         if (in_array('phpcsfixer', $this->parameters['enabled'], true)) {
             $output->writeln('<info>Fixing PHP code style with PHP-CS-Fixer</info>');
