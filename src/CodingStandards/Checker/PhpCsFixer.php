@@ -52,7 +52,7 @@ final class PhpCsFixer implements Checker
 
         $file = str_replace(
             '$$CHANGE-FOR-PHPCSFIXER-PATH$$',
-            $parameters['root_directory'] . '/' . $parameters['phpcsfixer_path'],
+            './../../../../../' . $parameters['phpcsfixer_path'],
             $file
         );
 
