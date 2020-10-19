@@ -19,7 +19,11 @@ final class Hooks
             if ($fileSystem->exists($hooksDirectory)) {
                 $fileSystem->remove($hooksDirectory);
             }
-            $fileSystem->symlink(__DIR__ . '/../Hooks', $hooksDirectory, true);
+            $fileSystem->symlink(
+                '../vendor/opositatest/coding-standards/src/CodingStandards/Hooks',
+                $hooksDirectory,
+                true
+            );
         } catch (\Exception $exception) {
             echo sprintf("Something wrong happens during the symlink process: \n%s\n", $exception->getMessage());
         }
