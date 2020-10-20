@@ -7,14 +7,12 @@ namespace Opositatest\CodingStandards\Error;
 class Error
 {
     private string $file;
-    private string $error;
-    private string $output;
+    private array $violations;
 
-    public function __construct(string $file, string $error, string $output)
+    public function __construct(string $file, array $violations)
     {
         $this->file = $file;
-        $this->error = $error;
-        $this->output = $output;
+        $this->violations = $violations;
     }
 
     public function file(): string
@@ -22,13 +20,8 @@ class Error
         return $this->file;
     }
 
-    public function error(): string
+    public function violations(): array
     {
-        return $this->error;
-    }
-
-    public function output(): string
-    {
-        return $this->output;
+        return $this->violations;
     }
 }

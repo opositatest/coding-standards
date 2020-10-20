@@ -10,6 +10,8 @@ parameters:
         - unusedcode
         - codesize
         - naming
+        - design
+        - cleancode
 
     phpcsfixer_path: src
     phpcsfixer_test_path: tests

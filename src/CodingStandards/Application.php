@@ -31,7 +31,7 @@ final class Application extends BaseApplication
 
     public function doRun(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln(sprintf('<fg=white;options=bold;bg=red>%s</fg=white;options=bold;bg=red>', self::APP_NAME));
+        $output->writeln(sprintf('<fg=white;options=bold;bg=blue>%s</fg=white;options=bold;bg=blue>', self::APP_NAME));
         $output->writeln('<info>Fetching files...</info>');
         $files = Git::committedFiles();
 
@@ -47,10 +47,22 @@ final class Application extends BaseApplication
 
         if (in_array('phpmd', $this->parameters['enabled'], true)) {
             $output->writeln('<info>Checking code mess with PHPMD</info>');
-            $phpmdResult = Phpmd::check($files, $this->parameters);
-            if (count($phpmdResult) > 0) {
-                foreach ($phpmdResult as $error) {
-                    $output->writeln($error->output());
+            $phpMdErrors = Phpmd::check($files, $this->parameters);
+            if (count($phpMdErrors) > 0) {
+                foreach ($phpMdErrors as $error) {
+                    $output->writeln(sprintf('File: %s', $error->file()));
+                    $output->writeln(str_pad('', mb_strlen(sprintf('File: %s', $error->file())), '='));
+                    foreach ($error->violations() as $violation) {
+                        $output->writeln(sprintf(
+                            'Priority: %s | Lines: %s to %s | %s (%s in "%s")',
+                            $violation->priority,
+                            str_pad((string) $violation->beginLine, 4, ' ', STR_PAD_LEFT),
+                            str_pad((string) $violation->endLine, 4, ' ', STR_PAD_LEFT),
+                            $violation->description,
+                            $violation->rule,
+                            $violation->ruleSet
+                        ));
+                    }
                 }
                 throw new CheckFailException('PHPMD');
             }

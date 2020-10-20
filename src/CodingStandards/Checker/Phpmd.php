@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Opositatest\CodingStandards\Checker;
 
 use Opositatest\CodingStandards\Error\Error;
-use Symfony\Component\Process\Process;
 
 final class Phpmd implements Checker
 {
@@ -19,18 +18,16 @@ final class Phpmd implements Checker
                 continue;
             }
 
-            $process = new Process(
-                ['vendor/phpmd/phpmd/src/bin/phpmd ' . $file . ' text ' . implode(',', $parameters['phpmd_rules'])]
-            );
-            $process->setWorkingDirectory($parameters['root_directory']);
-            $process->run();
+            $return = null;
+            $output = [];
+            $command = 'vendor/phpmd/phpmd/src/bin/phpmd ' . $file . ' json ' . implode(',', $parameters['phpmd_rules']);
+            exec($command, $output, $return);
 
-            if (!$process->isSuccessful()) {
-                $errors[] = new Error(
-                    $file,
-                    sprintf('<error>%s</error>', trim($process->getErrorOutput())),
-                    sprintf('<error>%s</error>', trim($process->getOutput()))
-                );
+            if (0 !== $return) {
+                $output = json_decode(implode("\n", $output));
+                foreach ($output->files as $outputFile) {
+                    $errors[] = new Error($file, $outputFile->violations);
+                }
             }
         }
 

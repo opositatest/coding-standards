@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7719aa2a6578b03e655a5ff44d6b9701",
+    "content-hash": "541b8154bb1d55516bb3ca0e54926cbd",
     "packages": [
         {
             "name": "composer/semver",
@@ -485,7 +485,7 @@
         },
         {
             "name": "opositatest/php-cs-fixer-config",
-            "version": "dev-master",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opositatest/php-cs-fixer-config.git",
@@ -2562,13 +2562,12 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "opositatest/php-cs-fixer-config": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3"
+        "php": "^7.4",
+        "ext-json": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "1.1.0"
