@@ -9,7 +9,7 @@
         "ext-json": "*",
         "incenteev/composer-parameter-handler": "^2.1",
         "neronmoon/scriptsdev": "0.1.7",
-        "opositatest/php-cs-fixer-config": "1.0.2",
+        "opositatest/php-cs-fixer-config": "dev-master",
         "phpmd/phpmd": "^2.9",
         "symfony/filesystem": "^4.0 || ^5.0",
         "symfony/yaml": "^4.4"
@@ -26,5 +26,7 @@
         "cs": [
             "php-cs-fixer fix --config=.php_cs -v"
         ]
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
