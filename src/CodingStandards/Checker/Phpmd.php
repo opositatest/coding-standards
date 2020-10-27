@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Opositatest\CodingStandards\Checker;
 
+use Opositatest\CodingStandards\Config;
 use Opositatest\CodingStandards\Error\Error;
 
 final class Phpmd implements Checker
@@ -20,7 +21,7 @@ final class Phpmd implements Checker
 
             $return = null;
             $output = [];
-            $command = 'vendor/phpmd/phpmd/src/bin/phpmd ' . $file . ' json ' . implode(',', $parameters['phpmd_rules']);
+            $command = 'vendor/phpmd/phpmd/src/bin/phpmd ' . $file . ' json ' . Config::csRootDir() . '/phpmd_ruleset.xml';
             exec($command, $output, $return);
 
             if (0 !== $return) {

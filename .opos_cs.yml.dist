@@ -5,13 +5,6 @@ parameters:
         - phpcsfixer
 
     phpmd_path: src
-    phpmd_rules:
-        - controversial
-        - unusedcode
-        - codesize
-        - naming
-        - design
-        - cleancode
 
     phpcsfixer_path: src
     phpcsfixer_test_path: tests
