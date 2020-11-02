@@ -8,7 +8,7 @@
         "php": "^7.4",
         "ext-json": "*",
         "incenteev/composer-parameter-handler": "^2.1",
-        "neronmoon/scriptsdev": "0.1.7",
+        "neronmoon/scriptsdev": "^0.1.8",
         "opositatest/php-cs-fixer-config": "^1.0.3",
         "phpmd/phpmd": "^2.9",
         "symfony/filesystem": "^4.0 || ^5.0",
