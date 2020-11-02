@@ -21,7 +21,7 @@ final class Phpmd implements Checker
 
             $return = null;
             $output = [];
-            $command = 'vendor/phpmd/phpmd/src/bin/phpmd ' . $file . ' json ' . Config::csRootDir() . '/phpmd_ruleset.xml';
+            $command = 'vendor/phpmd/phpmd/src/bin/phpmd ' . $file . ' json ' . Config::rootDir() . '/phpmd_ruleset.xml';
             exec($command, $output, $return);
 
             if (0 !== $return) {
