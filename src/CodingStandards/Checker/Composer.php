@@ -8,7 +8,7 @@ use Opositatest\CodingStandards\Exception\CheckFailException;
 
 final class Composer implements Checker
 {
-    public static function check(array $files = [], array $parameters = null)
+    public static function check(array $files, array $config): void
     {
         $composerJsonDetected = false;
         $composerLockDetected = false;

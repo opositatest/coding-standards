@@ -4,24 +4,17 @@ declare(strict_types=1);
 
 namespace Opositatest\CodingStandards;
 
-use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Yaml\Yaml;
 
 final class Config
 {
-    public static function copyFileIfNotExists(string $filename): void
+    public static function load(): array
     {
-        $destination = self::rootDir() . '/' . $filename;
-        $fileSystem = new Filesystem();
+        $rootDirectory = realpath(__DIR__ . '/../../../../../');
+        $config = Yaml::parse(file_get_contents($rootDirectory . '/.opos_cs.yml'))['parameters'];
+        $config['root_directory'] = $rootDirectory;
 
-        try {
-            if ($fileSystem->exists($destination)) {
-                return;
-            }
-
-            $fileSystem->copy(self::csRootDir() . '/' . $filename, $destination);
-        } catch (\Exception $exception) {
-            echo sprintf("Something wrong happens during the touch process: \n%s\n", $exception->getMessage());
-        }
+        return $config;
     }
 
     public static function rootDir() : string

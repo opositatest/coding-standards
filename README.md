@@ -15,7 +15,7 @@ standards.
 > This library is very focused to use as pre-commit hook. The checkers only validate the files that will be committed.
 
 ## Getting started
-The recommended and the most suitable way to install is through [Composer][2]. Be sure the tool is installed in
+The best recommended and suitable way to install is through [Composer][2]. Be sure the tool is installed in
 your system and execute the following command:
 ```
 $ composer require opositatest/coding-standards --dev
@@ -24,10 +24,10 @@ Then you have to update the `composer.json` with the following code:
 ```
 "scripts": {
     "opos-cs-scripts": [
-        "Opositatest\\CodingStandards\\Composer\\Hooks::buildDistFile",
+        "Opositatest\\CodingStandards\\Tools\\Files::buildDistFile",
         "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-        "Opositatest\\CodingStandards\\Composer\\Hooks::addHooks",
-        "Opositatest\\CodingStandards\\Composer\\Hooks::addFiles"
+        "Opositatest\\CodingStandards\\Tools\\Files::addHooks",
+        "Opositatest\\CodingStandards\\Tools\\Files::addFiles"
     ]
 },
 "extra": {

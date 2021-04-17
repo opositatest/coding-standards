@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Opositatest\CodingStandards\Git;
+namespace Opositatest\CodingStandards\Tools;
 
 final class Git
 {
@@ -23,7 +23,7 @@ final class Git
         return $output;
     }
 
-    public static function addFiles(array $files, $rootDirectory = null): array
+    public static function addFiles(array $files): void
     {
         foreach ($files as $file) {
             if (false === file_exists($file)) {
@@ -32,7 +32,5 @@ final class Git
 
             exec(sprintf('git add %s', $file));
         }
-
-        return $files;
     }
 }

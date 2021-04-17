@@ -8,46 +8,42 @@ use Opositatest\CodingStandards\Checker\Composer;
 use Opositatest\CodingStandards\Checker\PhpCsFixer;
 use Opositatest\CodingStandards\Checker\Phpmd;
 use Opositatest\CodingStandards\Exception\CheckFailException;
-use Opositatest\CodingStandards\Git\Git;
+use Opositatest\CodingStandards\Tools\Git;
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Yaml\Yaml;
 
 final class Application extends BaseApplication
 {
     private const APP_NAME = 'Opositatest Coding Standards';
 
-    private array $parameters;
+    private array $config;
 
     public function __construct()
     {
         parent::__construct(self::APP_NAME);
-
-        $rootDirectory = realpath(__DIR__ . '/../../../../../');
-        $this->parameters = Yaml::parse(file_get_contents($rootDirectory . '/.opos_cs.yml'))['parameters'];
-        $this->parameters['root_directory'] = $rootDirectory;
+        $this->config = Config::load();
     }
 
-    public function doRun(InputInterface $input, OutputInterface $output)
+    public function doRun(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln(sprintf('<fg=white;options=bold;bg=blue>%s</fg=white;options=bold;bg=blue>', self::APP_NAME));
         $output->writeln('<info>Fetching files...</info>');
         $files = Git::committedFiles();
 
-        if (in_array('composer', $this->parameters['enabled'], true)) {
+        if (in_array('composer', $this->config['enabled'], true)) {
             $output->writeln('<info>Check composer</info>');
-            Composer::check($files);
+            Composer::check($files, []);
         }
 
-        if (in_array('phpcsfixer', $this->parameters['enabled'], true)) {
+        if (in_array('phpcsfixer', $this->config['enabled'], true)) {
             $output->writeln('<info>Fixing PHP code style with PHP-CS-Fixer</info>');
-            PhpCsFixer::check($files, $this->parameters);
+            PhpCsFixer::check($files, $this->config);
         }
 
-        if (in_array('phpmd', $this->parameters['enabled'], true)) {
+        if (in_array('phpmd', $this->config['enabled'], true)) {
             $output->writeln('<info>Checking code mess with PHPMD</info>');
-            $phpMdErrors = Phpmd::check($files, $this->parameters);
+            $phpMdErrors = Phpmd::check($files, $this->config);
             if (count($phpMdErrors) > 0) {
                 foreach ($phpMdErrors as $error) {
                     $output->writeln(sprintf('File: %s', $error->file()));
@@ -68,12 +64,7 @@ final class Application extends BaseApplication
             }
         }
 
-        Git::addFiles($files, $this->parameters['root_directory']);
+        Git::addFiles($files);
         $output->writeln('<info>Nice commit man!</info>');
-    }
-
-    public function parameters()
-    {
-        return $this->parameters;
     }
 }

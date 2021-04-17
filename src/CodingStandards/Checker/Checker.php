@@ -6,5 +6,5 @@ namespace Opositatest\CodingStandards\Checker;
 
 interface Checker
 {
-    public static function check(array $files = [], array $parameters = null);
+    public static function check(array $files, array $parameters);
 }

@@ -6,16 +6,15 @@ namespace Opositatest\CodingStandards\Checker;
 
 use Opositatest\CodingStandards\Config;
 use Opositatest\CodingStandards\Error\Error;
+use Opositatest\CodingStandards\Tools\Files;
 
 final class Phpmd implements Checker
 {
-    use FileFinder;
-
-    public static function check(array $files = [], array $parameters = null): array
+    public static function check(array $files, array $config): array
     {
         $errors = [];
         foreach ($files as $file) {
-            if (false === self::exist($file, $parameters['phpmd_path'], 'php')) {
+            if (false === Files::exist($file, $config['phpmd_path'])) {
                 continue;
             }
 
