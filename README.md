@@ -24,17 +24,11 @@ Then you have to update the `composer.json` with the following code:
 ```
 "scripts": {
     "opos-cs-scripts": [
-        "Opositatest\\CodingStandards\\Tools\\Files::buildDistFile",
-        "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
         "Opositatest\\CodingStandards\\Tools\\Files::addHooks",
         "Opositatest\\CodingStandards\\Tools\\Files::addFiles"
     ]
 },
 "extra": {
-    "incenteev-parameters": {
-        "file": ".opos_cs.yml",
-        "dist-file": ".opos_cs.yml.dist"
-    },
     "scripts-dev": {
         "post-install-cmd": [
             "@opos-cs-scripts"

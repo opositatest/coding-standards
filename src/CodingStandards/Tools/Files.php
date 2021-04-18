@@ -29,17 +29,20 @@ final class Files
         }
     }
 
-    public static function buildDistFile() : void
+    public static function addFiles() : void
     {
+        (new PhpCsFixer())->createConfigFile();
+
         self::copyFile(
             sprintf('%s/.opos_cs.yml.dist', Config::csRootDir()),
             sprintf('%s/.opos_cs.yml.dist', Config::rootDir())
         );
-    }
 
-    public static function addFiles() : void
-    {
-        (new PhpCsFixer())->createConfigFile();
+        self::copyFile(
+            sprintf('%s/.opos_cs.yml.dist', Config::rootDir()),
+            sprintf('%s/.opos_cs.yml', Config::rootDir())
+        );
+
         self::copyFile(
             sprintf('%s/phpmd_ruleset.xml', Config::csRootDir()),
             sprintf('%s/phpmd_ruleset.xml', Config::rootDir())
