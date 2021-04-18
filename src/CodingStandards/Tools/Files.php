@@ -31,7 +31,7 @@ final class Files
 
     public static function buildDistFile() : void
     {
-        self::copyFileIfNotExists(
+        self::copyFile(
             sprintf('%s/.opos_cs.yml.dist', Config::csRootDir()),
             sprintf('%s/.opos_cs.yml.dist', Config::rootDir())
         );
@@ -40,7 +40,7 @@ final class Files
     public static function addFiles() : void
     {
         (new PhpCsFixer())->createConfigFile();
-        self::copyFileIfNotExists(
+        self::copyFile(
             sprintf('%s/phpmd_ruleset.xml', Config::csRootDir()),
             sprintf('%s/phpmd_ruleset.xml', Config::rootDir())
         );
@@ -57,15 +57,10 @@ final class Files
         return false;
     }
 
-    private static function copyFileIfNotExists(string $source, string $destination): void
+    private static function copyFile(string $source, string $destination): void
     {
-        $fileSystem = new Filesystem();
-
         try {
-            if ($fileSystem->exists($destination)) {
-                return;
-            }
-
+            $fileSystem = new Filesystem();
             $fileSystem->copy($source, $destination);
         } catch (\Exception $exception) {
             echo sprintf("Something wrong happens during the touch process: \n%s\n", $exception->getMessage());
