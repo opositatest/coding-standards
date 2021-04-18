@@ -33,17 +33,20 @@ final class Files
     {
         self::copyFile(
             sprintf('%s/.opos_cs.yml.dist', Config::csRootDir()),
-            sprintf('%s/.opos_cs.yml.dist', Config::rootDir())
+            sprintf('%s/.opos_cs.yml.dist', Config::rootDir()),
+            true
         );
 
         self::copyFile(
             sprintf('%s/.opos_cs.yml.dist', Config::rootDir()),
-            sprintf('%s/.opos_cs.yml', Config::rootDir())
+            sprintf('%s/.opos_cs.yml', Config::rootDir()),
+            true
         );
 
         self::copyFile(
             sprintf('%s/phpmd_ruleset.xml', Config::csRootDir()),
-            sprintf('%s/phpmd_ruleset.xml', Config::rootDir())
+            sprintf('%s/phpmd_ruleset.xml', Config::rootDir()),
+            false
         );
 
         (new PhpCsFixer())->createConfigFile();
@@ -60,10 +63,14 @@ final class Files
         return false;
     }
 
-    private static function copyFile(string $source, string $destination): void
+    private static function copyFile(string $source, string $destination, bool $overwrite): void
     {
         try {
             $fileSystem = new Filesystem();
+            if (false === $overwrite && true === $fileSystem->exists($destination)) {
+                return;
+            }
+
             $fileSystem->copy($source, $destination, true);
         } catch (\Exception $exception) {
             echo sprintf("Something wrong happens during the touch process: \n%s\n", $exception->getMessage());
