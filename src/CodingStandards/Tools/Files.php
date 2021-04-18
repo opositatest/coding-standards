@@ -61,7 +61,7 @@ final class Files
     {
         try {
             $fileSystem = new Filesystem();
-            $fileSystem->copy($source, $destination);
+            $fileSystem->copy($source, $destination, true);
         } catch (\Exception $exception) {
             echo sprintf("Something wrong happens during the touch process: \n%s\n", $exception->getMessage());
         }

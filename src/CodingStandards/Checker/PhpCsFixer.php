@@ -9,7 +9,7 @@ use Opositatest\CodingStandards\Tools\Files;
 
 final class PhpCsFixer extends Checker
 {
-    protected const CHECKER = 'phpmd';
+    protected const CHECKER = 'phpcsfixer';
     private const CONFIG_FILE = '.php_cs';
 
     public function check(array $files): void
