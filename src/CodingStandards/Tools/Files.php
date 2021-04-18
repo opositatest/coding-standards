@@ -39,16 +39,22 @@ final class Files
 
     public static function addFiles() : void
     {
-        PhpCsFixer::createConfigFile(Config::load());
+        (new PhpCsFixer())->createConfigFile();
         self::copyFileIfNotExists(
             sprintf('%s/phpmd_ruleset.xml', Config::csRootDir()),
             sprintf('%s/phpmd_ruleset.xml', Config::rootDir())
         );
     }
 
-    public static function exist(string $file, string $path, string $fileType = 'php'): bool
+    public static function exist(string $file, array $paths, string $fileType = 'php'): bool
     {
-        return 0 !== preg_match('/^' . str_replace('/', '\/', $path) . '\/(.*)(\.' . $fileType . ')$/', $file);
+        foreach ($paths as $path) {
+            if (0 !== preg_match('/^' . str_replace('/', '\/', $path) . '\/(.*)(\.' . $fileType . ')$/', $file)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static function copyFileIfNotExists(string $source, string $destination): void

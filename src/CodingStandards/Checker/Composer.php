@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace Opositatest\CodingStandards\Checker;
 
+use Opositatest\CodingStandards\Config;
 use Opositatest\CodingStandards\Exception\CheckFailException;
 
 final class Composer implements Checker
 {
-    public static function check(array $files, array $config): void
+    private array $config;
+
+    public function __construct()
+    {
+        $this->config = Config::loadChecker('composer');
+    }
+
+    public function check(array $files): void
     {
         $composerJsonDetected = false;
         $composerLockDetected = false;

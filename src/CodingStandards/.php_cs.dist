@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 $config = new Opositatest\PhpCsFixerConfig\StrictConfig();
-$config->getFinder()->in('$$CHANGE-FOR-PHPCSFIXER-PATH$$');
+$config->getFinder()->in($$CHANGE-FOR-PHPCSFIXER-PATH$$);
 
 $config->setCacheFile(__DIR__ . '/.php_cs.cache');
 

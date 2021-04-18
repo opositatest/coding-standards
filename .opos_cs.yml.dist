@@ -1,11 +1,16 @@
-parameters:
-    enabled:
-        - composer
-        - phpmd
-        - phpcsfixer
+global:
+    enabled: true
 
-    phpmd_path: src
-
-    phpcsfixer_path: src
-    phpcsfixer_test_path: tests
-    phpcsfixer_file_location: vendor/opositatest/coding-standards/src/CodingStandards/
+checker:
+    composer:
+        enabled: true
+    phpmd:
+        enabled: true
+        paths:
+            - src
+    phpcsfixer:
+        enabled: true
+        config_path: vendor/opositatest/coding-standards/src/CodingStandards/
+        paths:
+            - src
+            - tests

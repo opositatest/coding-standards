@@ -4,26 +4,32 @@ declare(strict_types=1);
 
 namespace Opositatest\CodingStandards\Checker;
 
+use Opositatest\CodingStandards\Config;
 use Opositatest\CodingStandards\Tools\Files;
 
 final class PhpCsFixer implements Checker
 {
     private const CONFIG_FILE = '.php_cs';
 
-    public static function check(array $files, array $config): void
+    private array $config;
+
+    public function __construct()
+    {
+        $this->config = Config::loadChecker('phpcsfixer');
+    }
+
+    public function check(array $files): void
     {
         foreach ($files as $file) {
-            if (false === Files::exist($file, $config['phpcsfixer_path'])
-                && false === Files::exist($file, $config['phpcsfixer_test_path'])
-            ) {
+            if (false === Files::exist($file, $this->config['paths'])) {
                 continue;
             }
 
-            self::execute($file, $config);
+            self::execute($file);
         }
     }
 
-    private static function execute($file, array $config): void
+    private function execute($file): void
     {
         // Exec PHP function is used because php-cs-fixer uses Symfony Process component inside
         // Process fails when is launched from another Process
@@ -32,31 +38,31 @@ final class PhpCsFixer implements Checker
             'vendor/friendsofphp/php-cs-fixer/php-cs-fixer',
             'fix',
             $file,
-            '--config=' . self::location($config) . '/' . self::CONFIG_FILE,
+            '--config=' . $this->configPath() . '/' . self::CONFIG_FILE,
             '2> /dev/null',
         ];
         exec(implode(' ', $commandLine));
     }
 
-    public static function createConfigFile(array $config): void
+    public function createConfigFile(): void
     {
         $file = file_get_contents(__DIR__ . '/../' . self::CONFIG_FILE . '.dist');
 
         $file = str_replace(
             '$$CHANGE-FOR-PHPCSFIXER-PATH$$',
-            $config['phpcsfixer_path'],
+            sprintf('[\'%s\']', implode('\', \'', $this->config['paths'])),
             $file
         );
 
         try {
-            file_put_contents(self::location($config) . '/' . self::CONFIG_FILE, $file);
+            file_put_contents($this->configPath() . '/' . self::CONFIG_FILE, $file);
         } catch (\Exception $exception) {
             echo sprintf("Something wrong happens during the creating process: \n%s\n", $exception->getMessage());
         }
     }
 
-    private static function location(array $config): string
+    private function configPath(): string
     {
-        return $config['root_directory'] . '/' . $config['phpcsfixer_file_location'];
+        return Config::rootDir() . '/' . $this->config['config_path'];
     }
 }

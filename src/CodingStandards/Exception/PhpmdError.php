@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Opositatest\CodingStandards\Error;
+namespace Opositatest\CodingStandards\Exception;
 
-class Error
+class PhpmdError
 {
     private string $file;
     private array $violations;

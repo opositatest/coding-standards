@@ -27,25 +27,30 @@ final class Application extends BaseApplication
 
     public function doRun(InputInterface $input, OutputInterface $output): void
     {
+        if (true !== $this->config['global']['enabled']) {
+            return;
+        }
+
         $output->writeln(sprintf('<fg=white;options=bold;bg=blue>%s</fg=white;options=bold;bg=blue>', self::APP_NAME));
         $output->writeln('<info>Fetching files...</info>');
         $files = Git::committedFiles();
 
-        if (in_array('composer', $this->config['enabled'], true)) {
+        if (true === $this->config['checker']['composer']['enabled']) {
             $output->writeln('<info>Check composer</info>');
-            Composer::check($files, []);
+            (new Composer())->check($files);
         }
 
-        if (in_array('phpcsfixer', $this->config['enabled'], true)) {
+        if (true === $this->config['checker']['phpcsfixer']['enabled']) {
             $output->writeln('<info>Fixing PHP code style with PHP-CS-Fixer</info>');
-            PhpCsFixer::check($files, $this->config);
+            (new PhpCsFixer())->check($files);
         }
 
-        if (in_array('phpmd', $this->config['enabled'], true)) {
+        if (true === $this->config['checker']['phpmd']['enabled']) {
             $output->writeln('<info>Checking code mess with PHPMD</info>');
-            $phpMdErrors = Phpmd::check($files, $this->config);
-            if (count($phpMdErrors) > 0) {
-                foreach ($phpMdErrors as $error) {
+            try {
+                (new Phpmd())->check($files);
+            } catch (CheckFailException $exception) {
+                foreach ($exception->errors() as $error) {
                     $output->writeln(sprintf('File: %s', $error->file()));
                     $output->writeln(str_pad('', mb_strlen(sprintf('File: %s', $error->file())), '='));
                     foreach ($error->violations() as $violation) {
@@ -60,7 +65,8 @@ final class Application extends BaseApplication
                         ));
                     }
                 }
-                throw new CheckFailException('PHPMD');
+
+                throw $exception;
             }
         }
 

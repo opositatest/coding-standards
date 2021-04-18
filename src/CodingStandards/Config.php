@@ -10,11 +10,14 @@ final class Config
 {
     public static function load(): array
     {
-        $rootDirectory = realpath(__DIR__ . '/../../../../../');
-        $config = Yaml::parse(file_get_contents($rootDirectory . '/.opos_cs.yml'))['parameters'];
-        $config['root_directory'] = $rootDirectory;
+        return Yaml::parse(file_get_contents(self::rootDir() . '/.opos_cs.yml.dist'));
+    }
 
-        return $config;
+    public static function loadChecker(string $id): array
+    {
+        $config = self::load();
+
+        return $config['checker'][$id];
     }
 
     public static function rootDir() : string
