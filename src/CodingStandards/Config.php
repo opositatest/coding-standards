@@ -10,7 +10,7 @@ final class Config
 {
     public static function load(): array
     {
-        return Yaml::parse(file_get_contents(self::rootDir() . '/.opos_cs.yml.dist'));
+        return Yaml::parse(file_get_contents(self::rootDir() . '/.opos_cs.yml'));
     }
 
     public static function loadChecker(string $id): array
