@@ -7,19 +7,19 @@ namespace Opositatest\CodingStandards\Checker;
 use Opositatest\CodingStandards\Config;
 use Opositatest\CodingStandards\Tools\Files;
 
-final class PhpCsFixer implements Checker
+final class PhpCsFixer extends Checker
 {
+    protected const CHECKER = 'phpmd';
     private const CONFIG_FILE = '.php_cs';
-
-    private array $config;
-
-    public function __construct()
-    {
-        $this->config = Config::loadChecker('phpcsfixer');
-    }
 
     public function check(array $files): void
     {
+        if (false === $this->isEnabled()) {
+            return;
+        }
+
+        $this->output->writeln('<info>Fixing PHP code style with PHP-CS-Fixer</info>');
+
         foreach ($files as $file) {
             if (false === Files::exist($file, $this->config['paths'])) {
                 continue;

@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Opositatest\CodingStandards\Checker;
 
-use Opositatest\CodingStandards\Config;
 use Opositatest\CodingStandards\Exception\CheckFailException;
 
-final class Composer implements Checker
+final class Composer extends Checker
 {
-    private array $config;
-
-    public function __construct()
-    {
-        $this->config = Config::loadChecker('composer');
-    }
+    protected const CHECKER = 'composer';
 
     public function check(array $files): void
     {
+        if (false === $this->isEnabled()) {
+            return;
+        }
+
+        $this->output->writeln('<info>Checking composer...</info>');
+
         $composerJsonDetected = false;
         $composerLockDetected = false;
 
@@ -32,7 +32,9 @@ final class Composer implements Checker
         }
 
         if ($composerJsonDetected && !$composerLockDetected) {
-            throw new CheckFailException('Composer', 'composer.lock must be committed if composer.json is modified!');
+            $this->output->writeln('composer.lock must be committed if composer.json is modified!');
+
+            throw new CheckFailException('Composer');
         }
     }
 }

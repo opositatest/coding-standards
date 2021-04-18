@@ -4,25 +4,12 @@ declare(strict_types=1);
 
 namespace Opositatest\CodingStandards\Exception;
 
-class CheckFailException extends \Exception
+use Exception;
+
+class CheckFailException extends Exception
 {
-    private array $errors;
-
-    public function __construct(string $checkName, string $message)
+    public function __construct(string $checkName)
     {
-        parent::__construct(sprintf('Check fails during the %s. %s', $checkName, $message));
-    }
-
-    public static function withErrors(string $checkName, string $message, array $errors): self
-    {
-        $exception = new self($checkName, $message);
-        $exception->errors = $errors;
-
-        return $exception;
-    }
-
-    public function errors(): array
-    {
-        return $this->errors;
+        parent::__construct(sprintf('Check failed during the %s check.', $checkName));
     }
 }
