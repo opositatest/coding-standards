@@ -31,8 +31,6 @@ final class Files
 
     public static function addFiles() : void
     {
-        (new PhpCsFixer())->createConfigFile();
-
         self::copyFile(
             sprintf('%s/.opos_cs.yml.dist', Config::csRootDir()),
             sprintf('%s/.opos_cs.yml.dist', Config::rootDir())
@@ -47,6 +45,8 @@ final class Files
             sprintf('%s/phpmd_ruleset.xml', Config::csRootDir()),
             sprintf('%s/phpmd_ruleset.xml', Config::rootDir())
         );
+
+        (new PhpCsFixer())->createConfigFile();
     }
 
     public static function exist(string $file, array $paths, string $fileType = 'php'): bool
