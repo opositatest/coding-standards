@@ -18,7 +18,7 @@ final class PhpCsFixer extends Checker
             return;
         }
 
-        $this->output->writeln('<info>Fixing PHP code style with PHP-CS-Fixer</info>');
+        $this->output->writeln('<info>Fixing PHP code style with PHP-CS-Fixer...</info>');
 
         foreach ($files as $file) {
             if (false === Files::exist($file, $this->config['paths'])) {

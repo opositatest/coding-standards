@@ -18,7 +18,7 @@ final class Phpmd extends Checker
             return;
         }
 
-        $this->output->writeln('<info>Checking code mess with PHPMD</info>');
+        $this->output->writeln('<info>Checking code mess with PHPMD...</info>');
         $errorsFound = false;
 
         foreach ($files as $file) {

@@ -1,6 +1,8 @@
 #!/bin/bash
 
-if command -v php &> /dev/null
+if command -v phpa &> /dev/null
 then
     php $(dirname "$0")/pre-commit-php
+else
+    echo PHP is not installed. The pre-commit hook will be skipped.
 fi
