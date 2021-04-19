@@ -34,7 +34,7 @@ final class Files
         self::copyFile(
             sprintf('%s/.opos_cs.yml.dist', Config::csRootDir()),
             sprintf('%s/.opos_cs.yml.dist', Config::rootDir()),
-            true
+            false
         );
 
         self::copyFile(
