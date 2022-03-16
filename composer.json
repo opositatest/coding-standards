@@ -5,7 +5,7 @@
     "license": "MIT",
     "authors": [],
     "require": {
-        "php": "^7.4",
+        "php": ">=7.4",
         "ext-json": "*",
         "incenteev/composer-parameter-handler": "^2.1",
         "neronmoon/scriptsdev": "^0.1.8",
